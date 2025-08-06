@@ -126,7 +126,8 @@ const categories = {
     "→(6)": " \\rightarrow ",
     "←(7)": " \\leftarrow ",
     "⋮(8)": " \\vdots ",
-    "⋱(9)": " \\ddots ",
+    "%(9)": " \\% ",
+    "⋱": " \\ddots ",
     "∵": " \\because ",    
     "⇔": " \\Leftrightarrow ",
     "↔": " \\leftrightarrow ",
@@ -150,3 +151,4 @@ const category_colors = {
   "⑪ 特殊記号": "#ffeecc",
 
 };
+
