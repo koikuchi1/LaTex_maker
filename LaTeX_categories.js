@@ -97,7 +97,7 @@ const categories = {
     "小スペース(1)": " \\, ",
     "中スペース(2)": " \\: ",
     "大スペース(3)": " \\quad ",
-    "改行用array{添字はrclなど}(4)": "\\begin{array}{rl}\n\\end{array} ",
+    "改行用array{添字はrclなど}(4)": "\\begin{array}{rl}\n\n\\end{array} ",
     "改行(5)": " \\\\ \n",
     "array揃え文字(6)": " & ",
     "列インデント(7)": " \\hspace{1em} ",
@@ -151,5 +151,6 @@ const category_colors = {
   "⑪ 特殊記号": "#ffeecc",
 
 };
+
 
 
