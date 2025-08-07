@@ -5,7 +5,7 @@ const categories = {
     "･(3)": " \\cdot ",
     "×(4)": " \\times ",
     "÷(5)": " \\div ",
-    "分数(6)": " \\frac{}{} ",
+    "分数(6)": " \\displaystyle \\frac{}{} ",
     "≠(7)": " \\neq ",
     "≤(8)": " \\leq ",
     "≥(9)": " \\geq ",
@@ -151,4 +151,5 @@ const category_colors = {
   "⑪ 特殊記号": "#ffeecc",
 
 };
+
 
