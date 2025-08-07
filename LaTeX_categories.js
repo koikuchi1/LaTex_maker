@@ -65,7 +65,7 @@ const categories = {
   "⑥ 積分・微分・三角関数": {
     "∑(1)": " \\displaystyle \\sum_{}^{} ",
     "∫(2)": " \\int ",
-    "lim(3)": " \\lim_{x \to 0} ",
+    "lim(3)": " \\lim_{x \\to 0} ",
     "微分(4)": " \\frac{d}{dx} ",
     "偏微分(5)": " \\frac{\\partial}{\\partial x} ",
     "log(6)": " \\log ",
@@ -154,6 +154,7 @@ const category_colors = {
   "⑪ 特殊記号": "#ffeecc",
 
 };
+
 
 
 
