@@ -63,15 +63,16 @@ const categories = {
     "Ω(オメガ8)": " \\Omega "
   },
   "⑥ 積分・微分・三角関数": {
-    "∫(1)": " \\int ",
-    "∑(2)": " \\displaystyle \\sum_{}^{} ",
-    "微分(3)": " \\frac{d}{dx} ",
-    "sin(4)": " \\sin ",
-    "cos(5)": " \\cos ",
-    "tan(6)": " \\tan ",
-    "log(7)": " \\log ",
-    "ln(8)": " \\ln ",
-    "偏微分(9)": " \\frac{\\partial}{\\partial x} ",
+    "∑(1)": " \\displaystyle \\sum_{}^{} ",
+    "∫(2)": " \\int ",
+    "lim(3)": " \\lim_{x \to 0} ",
+    "微分(4)": " \\frac{d}{dx} ",
+    "偏微分(5)": " \\frac{\\partial}{\\partial x} ",
+    "log(6)": " \\log ",
+    "ln(7)": " \\ln ",
+    "sin(8)": " \\sin ",
+    "cos(9)": " \\cos ",
+    "tan": " \\tan ",  
     "∬": " \\iint ",
     "∭": " \\iiint ",
   },
@@ -153,6 +154,7 @@ const category_colors = {
   "⑪ 特殊記号": "#ffeecc",
 
 };
+
 
 
 
