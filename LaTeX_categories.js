@@ -26,7 +26,8 @@ const categories = {
     "n√(4)": " \\sqrt[n]{\n} ",
     "バー(5)": " \\bar{} ",
     "上線(6)": " \\overline{} ",
-    "下線(7)": " \\underline{} "
+    "下線(7)": " \\underline{} ",
+    "上付き点(8)": " \\dot{} ",
   },
   "④ ギリシャ小文字": {
     "α(アルファ1)": " \\alpha ",
@@ -154,6 +155,7 @@ const category_colors = {
   "⑪ 特殊記号": "#ffeecc",
 
 };
+
 
 
 
