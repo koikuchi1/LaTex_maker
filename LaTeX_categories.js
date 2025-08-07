@@ -133,7 +133,8 @@ const categories = {
     "↔": " \\leftrightarrow ",
     "⇑": " \\Uparrow ",
     "⇒": " \\Rightarrow ",
-    "↦": " \\mapsto "
+    "↦": " \\mapsto ",
+    "表水平ライン": "\n\\hline\n",
   },
 };
 
@@ -151,6 +152,7 @@ const category_colors = {
   "⑪ 特殊記号": "#ffeecc",
 
 };
+
 
 
 
