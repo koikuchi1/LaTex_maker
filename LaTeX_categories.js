@@ -71,8 +71,9 @@ const categories = {
     "偏微分(5)": " \\frac{\\partial}{\\partial x} ",
     "log(6)": " \\log ",
     "ln(7)": " \\ln ",
-    "sin(8)": " \\sin ",
-    "cos(9)": " \\cos ",
+    "無限大(8)": " \\infty ",
+    "sin(9)": " \\sin ",
+    "cos": " \\cos ",
     "tan": " \\tan ",  
     "∬": " \\iint ",
     "∭": " \\iiint ",
@@ -155,6 +156,7 @@ const category_colors = {
   "⑪ 特殊記号": "#ffeecc",
 
 };
+
 
 
 
