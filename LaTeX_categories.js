@@ -9,6 +9,7 @@ const categories = {
     "≠(7)": " \\neq ",
     "≤(8)": " \\leq ",
     "≥(9)": " \\geq ",
+    "≒": " \\fallingdotseq ",
   },
   "② 括弧・絶対値": {
     "()(1)": " \\left( \n \\right) ",
@@ -152,6 +153,7 @@ const category_colors = {
   "⑪ 特殊記号": "#ffeecc",
 
 };
+
 
 
 
