@@ -68,6 +68,11 @@
       padding: 6px 12px;
       font-size: 14px;
     }
+    .category-buttons button.selected-category {
+      background-color: #ff9939;  /* 青系。お好みで変更可 */
+      color: white;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -117,6 +122,16 @@
       btn.onclick = () => insertLatex(commands[label]);
       btnGroup.appendChild(btn);
     }
+
+    // 選択中カテゴリのボタンにクラス付与(色の変更のため)
+    const categoryButtons = document.querySelectorAll("#category-buttons button");
+    categoryButtons.forEach(btn => {
+      if (btn.textContent === cat) {
+        btn.classList.add("selected-category");
+      } else {
+        btn.classList.remove("selected-category");
+      }
+    });
   }
 
   function createCategoryButtons() {
@@ -195,18 +210,20 @@
 
   // すべてのカテゴリボタンにイベントリスナーを追加
   categoryButtonsContainer.addEventListener("keydown", function(e) {
-  if (e.key === "Enter") {
-    const activeElem = document.activeElement;
-    if (activeElem && activeElem.tagName === "BUTTON") {
-      activeElem.click(); // クリックイベントを発火させる
-      const textarea = document.getElementById("latex-input");
-      if (textarea) {
-        textarea.focus();
+    if (e.key === "Enter") {
+      const activeElem = document.activeElement;
+      if (activeElem && activeElem.tagName === "BUTTON") {
+        activeElem.click(); // クリックイベントを発火させる
+        const textarea = document.getElementById("latex-input");
+        if (textarea) {
+          textarea.focus();
+        }
+        e.preventDefault(); // デフォルトのボタン動作を防止（必要に応じて）
       }
-      e.preventDefault(); // デフォルトのボタン動作を防止（必要に応じて）
     }
-  }
-});
+  });
+
+
 
   // 初期表示
   createCategoryButtons();
