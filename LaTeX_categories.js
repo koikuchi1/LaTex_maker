@@ -16,7 +16,7 @@ const categories = {
     "[](2)": " \\left[ \n \\right] ",
     "{}(3)": " \\left\\{ \n \\right\\} ",
     "| |(4)[絶対値]": " \\left| \n \\right| ",
-    "‖ ‖(5)": " \\left\\| \n \\right\\| ",
+    "‖ ‖(5)[ノルム]": " \\left\\| \n \\right\\| ",
     "⌊ ⌋(6)[床関数･切り下げ整数化]": " \\lfloor\\| \n \\rfloor\\| ",
     "⌈ ⌉(7)[天井関数･切り上げ整数化]": " \\lceil\\| \n \\rceil\\| ",
     "〈〉(8)": " \\left\\langle \n \\right\\rangle ",
@@ -182,3 +182,4 @@ const category_colors = {
   "⑭ 特殊記号": "#ffeecc",
 
 };
+
