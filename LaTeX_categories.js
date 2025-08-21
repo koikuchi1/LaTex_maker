@@ -72,7 +72,7 @@ const categories = {
   },
   "⑥ 積分・微分": {
     "∑(1)[和]": " \\displaystyle \\sum_{}^{} ",
-    "∫(2)[積分]": " \\int ",
+    "∫(2)[積分]": " \\displaystyle  \\int_{}^{} ",
     "lim(3)[限界]": " \\lim_{x \\to 0} ",
     "微分(4)": " \\frac{d}{dx} ",
     "偏微分(5)": " \\frac{\\partial}{\\partial x} ",
@@ -81,6 +81,7 @@ const categories = {
     "無限大(8)": " \\infty ",
     "∬": " \\iint ",
     "∭": " \\iiint ",
+    "exp(指数関数)": " \\exp() ",
   },
     "⑦ 三角関数": {
     "sin(1)": " \\sin ",
@@ -183,6 +184,3 @@ const category_colors = {
   "⑭ 特殊記号": "#ffeecc",
 
 };
-
-
-
