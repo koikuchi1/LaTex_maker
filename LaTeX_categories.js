@@ -95,7 +95,7 @@ const categories = {
     "3要素以上の行列(4)": " \\begin{array}{ccc}a & b & c \\\\ d & e & f \\end{array} ",
     "ベクトル(5)": " \\vec{v} ",
     "u→(6)": " \\overrightarrow{u} ",
-    "転置(8)": "^T ",
+    "転置(8)": "^\\top ",
     "二項(9)": " \\binom{n}{k}"
   },
   "⑨ 書体・太字": {
@@ -187,5 +187,6 @@ const category_colors = {
   "⑭ 特殊記号": "#ffeecc",
 
 };
+
 
 
