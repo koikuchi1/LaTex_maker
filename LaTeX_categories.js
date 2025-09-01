@@ -35,6 +35,7 @@ const categories = {
     "上付き⋀(9)[推定]": " \\widehat{} ",
     "上付き～": " \\widetilde{} ",
     "上二重線[平均の平均]": " \\overline{\\overline{\n}} ",
+    "上付[応用]": " \\overset{}{} ",
     "前添え字[確率などのCやP用]": " {}_{n}C ",
   },
   "④ ギリシャ小文字": {
@@ -188,6 +189,7 @@ const category_colors = {
   "⑭ 特殊記号": "#ffeecc",
 
 };
+
 
 
 
