@@ -5,10 +5,11 @@ const categories = {
     "･(3)[掛け算]": " \\cdot ",
     "×(4)": " \\times ",
     "÷(5)": " \\div ",
-    "分数(6)": " \\displaystyle \\frac{}{} ",
+    "分数(6)[上下拡大有]": " \\dfrac{}{} ",
     "≠(7)": " \\neq ",
     "≤(8)": " \\leq ",
     "≥(9)": " \\geq ",
+    "分数[上下拡大なし]": " \\frac{}{} ",
     "≒": " \\fallingdotseq ",
   },
   "② 括弧・絶対値": {
@@ -187,6 +188,7 @@ const category_colors = {
   "⑭ 特殊記号": "#ffeecc",
 
 };
+
 
 
 
