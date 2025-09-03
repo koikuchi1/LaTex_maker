@@ -8,7 +8,12 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script>
       window.MathJax = {
-        tex: { packages: ['base', 'ams'] },
+        tex: { packages: ['base', 'ams'] ,
+          // \\ を \newline にマップ
+          macros: {
+            '\\\\': '\\newline'
+          }
+        },
         svg: { fontCache: 'none' ,
         /*  styles: {
             "svg": {
@@ -267,5 +272,6 @@
     </script>
   </body>
 </html>
+
 
 
