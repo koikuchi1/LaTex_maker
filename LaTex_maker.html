@@ -140,7 +140,7 @@
       function renderLaTeX() {
         let latex = document.getElementById("latex-input").value.trim();
     
-        const wrapped = "\\begin{array}{@{}l@{}}" + latex + "\\end{array}";
+        const wrapped = "\\begin{aligned}" + latex + "\\end{aligned}";
         
     
         document.getElementById("preview").innerHTML = `\\[${latex}\\]`;
@@ -276,6 +276,7 @@
     </script>
   </body>
 </html>
+
 
 
 
