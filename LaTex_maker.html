@@ -140,10 +140,8 @@
       function renderLaTeX() {
         let latex = document.getElementById("latex-input").value.trim();
     
-        // \\ が含まれる場合は array に包む
-        if (latex.includes("\\\\")) {
-           const wrapped = "\\begin{array}{@{}l@{}}" + latex + "\\end{array}";
-        }
+        const wrapped = "\\begin{array}{@{}l@{}}" + latex + "\\end{array}";
+        
     
         document.getElementById("preview").innerHTML = `\\[${latex}\\]`;
         MathJax.typesetPromise();
@@ -278,6 +276,7 @@
     </script>
   </body>
 </html>
+
 
 
 
