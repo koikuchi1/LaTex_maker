@@ -8,12 +8,7 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script>
       window.MathJax = {
-        tex: { packages: ['base', 'ams'] ,
-          // \\ を \newline にマップ
-          macros: {
-            '\\\\': '\\newline'
-          }
-        },
+        tex: { packages: ['base', 'ams'] },
         svg: { fontCache: 'none' ,
         /*  styles: {
             "svg": {
@@ -143,10 +138,22 @@
       }
 
       function renderLaTeX() {
-        const latex = document.getElementById("latex-input").value;
+        let latex = document.getElementById("latex-input").value.trim();
+    
+        // 改行や \\ が含まれる場合は array に包む
+        if (latex.includes("\n") || latex.includes("\\\\")) {
+          const lines = latex.split(/\\\\|\n/).map(l => l.trim());
+          latex = "\\begin{array}{@{}l@{}}" + lines.join(" \\\\ ") + "\\end{array}";
+        }
+    
         document.getElementById("preview").innerHTML = `\\[${latex}\\]`;
         MathJax.typesetPromise();
       }
+    //  function renderLaTeX() {
+    //    const latex = document.getElementById("latex-input").value;
+    //    document.getElementById("preview").innerHTML = `\\[${latex}\\]`;
+    //    MathJax.typesetPromise();
+    //  }
 
       // カテゴリのボタンの選択を変更したときの関数
       function switchCategory(cat) {
@@ -272,6 +279,7 @@
     </script>
   </body>
 </html>
+
 
 
 
