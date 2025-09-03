@@ -143,7 +143,7 @@
         const wrapped = "\\begin{aligned}" + latex + "\\end{aligned}";
         
     
-        document.getElementById("preview").innerHTML = `\\[${latex}\\]`;
+        document.getElementById("preview").innerHTML = `\\[${wrapped}\\]`;
         MathJax.typesetPromise();
       }
     //  function renderLaTeX() {
@@ -276,6 +276,7 @@
     </script>
   </body>
 </html>
+
 
 
 
