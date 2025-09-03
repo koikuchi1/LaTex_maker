@@ -141,7 +141,7 @@
         let latex = document.getElementById("latex-input").value.trim();
 
         // arrayなしで改行させる
-        const wrapped = "\\begin{aligned}" + latex + "\\end{aligned}";    
+        const wrapped = "\\begin{array}{l}" + latex + "\\end{array}";    
         document.getElementById("preview").innerHTML = `\\[${wrapped}\\]`;
         MathJax.typesetPromise();
       }
@@ -275,6 +275,7 @@
     </script>
   </body>
 </html>
+
 
 
 
