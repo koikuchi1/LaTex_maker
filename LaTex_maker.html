@@ -140,8 +140,8 @@
       function renderLaTeX() {
         let latex = document.getElementById("latex-input").value.trim();
     
-        // 改行や \\ が含まれる場合は array に包む
-        if (latex.includes("\n") || latex.includes("\\\\")) {
+        // \\ が含まれる場合は array に包む
+        if (latex.includes("\\\\")) {
           const lines = latex.split(/\\\\|\n/).map(l => l.trim());
           latex = "\\begin{array}{@{}l@{}}" + lines.join(" \\\\ ") + "\\end{array}";
         }
@@ -279,6 +279,7 @@
     </script>
   </body>
 </html>
+
 
 
 
