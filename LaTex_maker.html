@@ -139,10 +139,9 @@
 
       function renderLaTeX() {
         let latex = document.getElementById("latex-input").value.trim();
-    
-        const wrapped = "\\begin{aligned}" + latex + "\\end{aligned}";
-        
-    
+
+        // arrayなしで改行させる
+        const wrapped = "\\begin{aligned}" + latex + "\\end{aligned}";    
         document.getElementById("preview").innerHTML = `\\[${wrapped}\\]`;
         MathJax.typesetPromise();
       }
@@ -276,6 +275,7 @@
     </script>
   </body>
 </html>
+
 
 
 
