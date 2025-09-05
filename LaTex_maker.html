@@ -154,17 +154,43 @@
 
   async function copyFormulaAsImage() {
     const svgElem = document.querySelector("#preview svg");
-    if (!svgElem) return;
+    if (!svgElem) {
+      alert("数式がありません");
+      return;
+    }
 
-    const canvas = await html2canvas(svgElem, {
-      backgroundColor: null,
-      scale: 2
-    });
-    canvas.toBlob(async (blob) => {
-      await navigator.clipboard.write([
-        new ClipboardItem({ "image/png": blob })
-      ]);
-    });
+    // SVG を文字列に変換
+    const serializer = new XMLSerializer();
+    const svgString = serializer.serializeToString(svgElem);
+
+    // Blob にして読み込む
+    const blob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+
+    // Image オブジェクトに読み込み
+    const img = new Image();
+    img.onload = async () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width * 2;   // 高解像度化
+      canvas.height = img.height * 2;
+      const ctx = canvas.getContext("2d");
+      ctx.scale(2, 2);
+      ctx.drawImage(img, 0, 0);
+
+      canvas.toBlob(async (pngBlob) => {
+        try {
+          await navigator.clipboard.write([
+            new ClipboardItem({ "image/png": pngBlob })
+          ]);
+          //alert("数式画像をコピーしました！");
+        } catch (err) {
+          alert("コピーに失敗しました: " + err);
+        }
+      });
+
+      URL.revokeObjectURL(url);
+    };
+    img.src = url;
   }
 
 // async function copyFormulaAsImage() {
@@ -255,3 +281,4 @@
 
 </body>
 </html>
+
