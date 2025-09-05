@@ -1,288 +1,257 @@
 <!DOCTYPE html>
-<!-- LaTex Maker.html -->
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LaTeX入力補助アプリ（ブラウザ版）</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script>
-      window.MathJax = {
-        tex: { packages: ['base', 'ams'] },
-        svg: { fontCache: 'none' ,
-        /*  styles: {
-            "svg": {
-              "verticalAlign": "0"  // ← ← ← ← ← ← これが余白の原因を打ち消す！
-            }
-          }
-        },  // ← SVG出力に必要な設定
-        options: {
-          renderActions: { assistiveMml: [] }  // ← 重複回避のため*/
-        },
-        loader: { load: ['[tex]/ams'] },
-        startup: {
-          typeset: false  // 自動レンダリングを抑制（自前で renderLaTeX() を呼ぶので）
-        }
-      };
-    </script>
-    <!--
-      script id="MathJax-script" async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    /script>
-    -->
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-    <script src="LaTeX_categories.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>   
-    <style>
-      body {
-        font-family: sans-serif;
-        margin: 20px;
-        text-align: center;
+<head>
+  <meta charset="UTF-8">
+  <title>LaTeX入力補助アプリ（ブラウザ版）</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script>
+  window.MathJax = {
+    tex: { packages: ['base', 'ams'] ,    },
+    svg: { fontCache: 'none' },  // ← SVG出力に必要な設定
+    options: {
+      renderActions: { assistiveMml: [] }  // ← 重複回避のため
+    },
+    loader: { load: ['[tex]/ams'] },
+    startup: {
+      typeset: false  // 自動レンダリングを抑制（自前で renderLaTeX() を呼ぶので）
+    }
+  };
+</script>
+  <!--
+    script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+   /script>
+ -->
+  <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+  <script src="LaTeX_categories.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>   
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+      text-align: center;
+    }
+    #preview {
+      margin-top: 20px;
+      min-height: 100px;
+      border: 1px dashed #ccc;
+      padding: 10px;
+      background-color: white; /* ← 背景白に */
+    }
+    textarea {
+      width: 90%;
+      height: 170px;
+      line-height: 1.2;
+      font-size: 16px;
+      white-space: pre;
+      overflow-x: auto;
+      overflow-y: auto;
+    }
+    .button-group {
+      margin-top: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .button-group button {
+      margin: 4px;
+      padding: 6px 10px;
+      font-size: 14px;
+    }
+    .category-buttons {
+      margin-bottom: 10px;
+    }
+    .category-buttons button {
+      margin: 3px;
+      padding: 6px 12px;
+      font-size: 14px;
+    }
+    .category-buttons button.selected-category {
+      background-color: #ff9939;  /* 青系。お好みで変更可 */
+      color: white;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<h1>LaTeX入力補助</h1>
+
+<div class="category-buttons" id="category-buttons">
+  <!-- カテゴリボタンはJSで生成 -->
+</div>
+
+<div id="buttons" class="button-group">
+  <!-- コマンドボタンがここに表示 -->
+</div>
+
+<textarea id="latex-input" oninput="renderLaTeX()" placeholder="ここにLaTeXを入力..."></textarea>
+
+<div id="preview"></div>
+
+<button onclick="copyFormulaAsImage()">数式を画像としてコピー</button>
+
+<script>
+    function insertLatex(cmd) {
+    const textarea = document.getElementById("latex-input");
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = textarea.value;
+    textarea.value = text.slice(0, start) + cmd + text.slice(end);
+    textarea.focus();
+    textarea.selectionStart = textarea.selectionEnd = start + cmd.length;
+    renderLaTeX();
+  }
+
+  function renderLaTeX() {
+    let latex = document.getElementById("latex-input").value.trim();
+
+    // arrayなしで改行させる
+    const wrapped = "\\begin{array}{l}" + latex + "\\end{array}";    
+    document.getElementById("preview").innerHTML = `\\[${wrapped}\\]`;
+    MathJax.typesetPromise();
+  }
+//  function renderLaTeX() {
+//    const latex = document.getElementById("latex-input").value;
+//    document.getElementById("preview").innerHTML = `\\[${latex}\\]`;
+//    MathJax.typesetPromise();
+//  }
+
+  function switchCategory(cat) {
+    const btnGroup = document.getElementById("buttons");
+    btnGroup.innerHTML = "";
+    const commands = categories[cat];
+    for (let label in commands) {
+      const btn = document.createElement("button");
+      btn.textContent = label;
+      btn.style.backgroundColor = category_colors[cat] || "#eee";
+      btn.onclick = () => insertLatex(commands[label]);
+      btnGroup.appendChild(btn);
+    }
+
+    // 選択中カテゴリのボタンにクラス付与(色の変更のため)
+    const categoryButtons = document.querySelectorAll("#category-buttons button");
+    categoryButtons.forEach(btn => {
+      if (btn.textContent === cat) {
+        btn.classList.add("selected-category");
+      } else {
+        btn.classList.remove("selected-category");
       }
-      #preview {/*LaTex画像表示エリア*/
-        /*width: 90%;*/
-        display: inline-block;        /*コンテンツ幅に合わせる */
-        /*margin-top: 20px;*/
-        /*min-height: 100px;*/
-        border: 1px dashed #ccc;
-        padding: 10px;
-        background-color: white; /* ← 背景白に */
-      }
-      /*#preview svg {
-        display: block;
-        margin: 0 auto;
-      }*/
-      textarea {/*LaTex入力エリア*/
-        width: 90%;
-        height: 170px;
-        line-height: 1.2;
-        font-size: 16px;
-        white-space: pre;
-        overflow-x: auto;
-        overflow-y: auto;
-      }
-      .button-group {
-        margin-top: 15px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .button-group button {
-        margin: 4px;
-        padding: 6px 10px;
-        font-size: 14px;
-      }
-      .category-buttons {
-        margin-bottom: 10px;
-      }
-      .category-buttons button {
-        margin: 3px;
-        padding: 6px 12px;
-        font-size: 14px;
-      }
-      .category-buttons button.selected-category { /*選択されているカテゴリボタンの色を変えるスタイル */
-        background-color: #ff9939; 
-        color: white;
-        font-weight: bold;
-      }
-      /*スマホ用画面(幅600px以下の画面)のスタイルに適用*/
-      @media screen and (max-width: 600px) {
-        textarea {
-          width: 95%;
-          font-size: 14px;
-          height: 140px;
-        }
+    });
+  }
 
-        .button-group button,
-        .category-buttons button {
-          font-size: 12px;
-          padding: 5px 8px;
-        }
+  function createCategoryButtons() {
+    const container = document.getElementById("category-buttons");
+    for (let cat in categories) {
+      const btn = document.createElement("button");
+      btn.textContent = cat;
+      btn.onclick = () => switchCategory(cat);
+      container.appendChild(btn);
+    }
+  }
 
-        #preview {
-          padding: 6px;
-          font-size: 90%;
-        }
-      }
-    </style>
-  </head>
+  async function copyFormulaAsImage() {
+    const svgElem = document.querySelector("#preview svg");
+    if (!svgElem) return;
 
-  <body>
-    <h1>LaTeX入力補助</h1>
+    const canvas = await html2canvas(svgElem, {
+      backgroundColor: null,
+      scale: 2
+    });
+    canvas.toBlob(async (blob) => {
+      await navigator.clipboard.write([
+        new ClipboardItem({ "image/png": blob })
+      ]);
+    });
+  }
 
-    <!-- カテゴリボタン -->
-    <div class="category-buttons" id="category-buttons"><!-- カテゴリボタンはJSで生成 --></div>
+// async function copyFormulaAsImage() {
+//    const formulaDiv = document.getElementById("preview");
+//    try {
+//      const canvas = await html2canvas(formulaDiv, {
+//        backgroundColor: null, // 背景透過
+//        scale: 2               // 高解像度化
+//      });
+//      canvas.toBlob(async (blob) => {
+//        if (navigator.clipboard && window.ClipboardItem) {
+//          try {
+//            await navigator.clipboard.write([
+//              new ClipboardItem({ "image/png": blob })
+//            ]);
+//            //alert("数式画像をクリップボードにコピーしました！");
+//          } catch (err) {
+//            alert("コピーに失敗しました: " + err);
+//          }
+//        } else {
+//          alert("このブラウザは画像コピーをサポートしていません。");
+//        }
+//      });
+//    } catch (e) {
+//      console.error("画像化失敗:", e);
+//      alert("数式を画像としてコピーできませんでした。");
+//    }
+//  }
 
-    <!-- コマンドボタン -->
-    <div id="buttons" class="button-group"><!-- コマンドボタンがここに表示 --></div>
-
-    <!-- LaTex入力テキストエリア -->
-    <textarea id="latex-input" oninput="renderLaTeX()" placeholder="ここにLaTeXを入力..."></textarea>
-
-    <!-- LaTex合成画像表示エリア -->
-    <div style="text-align: center;"><div id="preview"></div></div>
-
-    <!-- LaTex合成画像コピーボタン -->
-    <button onclick="copyFormulaAsImage()">数式を画像としてコピー</button>
-
-    <script>
-      function insertLatex(cmd) {
-        const textarea = document.getElementById("latex-input");
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        const text = textarea.value;
-        textarea.value = text.slice(0, start) + cmd + text.slice(end);
-        textarea.focus();
-        textarea.selectionStart = textarea.selectionEnd = start + cmd.length;
-        renderLaTeX();
-      }
-
-      function renderLaTeX() {
-        let latex = document.getElementById("latex-input").value.trim();
-
-        // arrayなしで改行させる
-        const wrapped = "\\begin{array}{l}" + latex + "\\end{array}";    
-        document.getElementById("preview").innerHTML = `\\[${wrapped}\\]`;
-        MathJax.typesetPromise();
-      }
-    //  function renderLaTeX() {
-    //    const latex = document.getElementById("latex-input").value;
-    //    document.getElementById("preview").innerHTML = `\\[${latex}\\]`;
-    //    MathJax.typesetPromise();
-    //  }
-
-      // カテゴリのボタンの選択を変更したときの関数
-      function switchCategory(cat) {
+  // Ctrl+1～9 でボタンを押せるようにする
+  window.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && !e.shiftKey && !e.altKey) {
+      // '1'～'9' のキーを判別
+      const key = e.key;
+      if (key >= '1' && key <= '9') {
+        // buttons 内のボタン一覧を取得
         const btnGroup = document.getElementById("buttons");
-        btnGroup.innerHTML = "";
-        const commands = categories[cat];
-        for (let label in commands) {
-          const btn = document.createElement("button");
-          btn.textContent = label;
-          btn.style.backgroundColor = category_colors[cat] || "#eee";
-          btn.onclick = () => insertLatex(commands[label]);
-          btnGroup.appendChild(btn);
-        }
-
-        // 選択中カテゴリのボタンにクラス付与(色の変更のため)
-        const categoryButtons = document.querySelectorAll("#category-buttons button");
-        categoryButtons.forEach(btn => {
-          if (btn.textContent === cat) {
-            btn.classList.add("selected-category");
-          } else {
-            btn.classList.remove("selected-category");
+        const buttons = btnGroup.querySelectorAll("button");
+        const index = parseInt(key, 10) - 1;
+        if (index < buttons.length) {
+          e.preventDefault();  // ブラウザのCtrl+数字の挙動を防止
+          buttons[index].click();
+          // フォーカスをテキストエリアに戻す
+          const textarea = document.getElementById("latex-input");
+          if (textarea) {
+            textarea.focus();
           }
-        });
-      }
-
-      // 変更されたカテゴリに合わせたボタン群の配置
-      function createCategoryButtons() {
-        const container = document.getElementById("category-buttons");
-        for (let cat in categories) {
-          const btn = document.createElement("button");
-          btn.textContent = cat;
-          btn.onclick = () => switchCategory(cat);
-          container.appendChild(btn);
         }
       }
-
-      // LaTex合成画像コピーボタン関数
-      async function copyFormulaAsImage() {
-        const formulaDiv = document.getElementById("preview");
-        try {
-          const canvas = await html2canvas(formulaDiv, {
-            backgroundColor: null, // 背景透過
-            scale: 2               // 高解像度化
-          });
-          canvas.toBlob(async (blob) => {
-            if (navigator.clipboard && window.ClipboardItem) {
-              try {
-                await navigator.clipboard.write([
-                  new ClipboardItem({ "image/png": blob })
-                ]);
-                //alert("数式画像をクリップボードにコピーしました！");
-              } 
-              catch (err) {
-                alert("コピーに失敗しました: " + err);
-              }
-            } 
-            else {
-              alert("このブラウザは画像コピーをサポートしていません。");
-            }
-          });
-        } 
-        catch (e) {
-          console.error("画像化失敗:", e);
-          alert("数式を画像としてコピーできませんでした。");
-        }
+    }
+  });
+  
+  // テキストエリアからTABボタンでカテゴリボタンにフォーカスが移るようにする関数
+  document.getElementById("latex-input").addEventListener("keydown", function(event) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      const firstCategoryBtn = document.querySelector("#category-buttons button");
+      if (firstCategoryBtn) {
+        firstCategoryBtn.focus();
       }
+    }
+  });
 
-      // Ctrl+1～9 でボタンを押せるようにする
-      window.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && !e.shiftKey && !e.altKey) {
-          // '1'～'9' のキーを判別
-          const key = e.key;
-          if (key >= '1' && key <= '9') {
-            // buttons 内のボタン一覧を取得
-            const btnGroup = document.getElementById("buttons");
-            const buttons = btnGroup.querySelectorAll("button");
-            const index = parseInt(key, 10) - 1;
-            if (index < buttons.length) {
-              e.preventDefault();  // ブラウザのCtrl+数字の挙動を防止
-              buttons[index].click();
-              // フォーカスをテキストエリアに戻す
-              const textarea = document.getElementById("latex-input");
-              if (textarea) {
-                textarea.focus();
-              }
-            }
-          }
+  // カテゴリボタンにフォーカスがあるときにENTERボタンを押したらテキストエリアにフォーカスが移る関数
+  const categoryButtonsContainer = document.getElementById("category-buttons");
+
+  // すべてのカテゴリボタンにイベントリスナーを追加
+  categoryButtonsContainer.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+      const activeElem = document.activeElement;
+      if (activeElem && activeElem.tagName === "BUTTON") {
+        activeElem.click(); // クリックイベントを発火させる
+        const textarea = document.getElementById("latex-input");
+        if (textarea) {
+          textarea.focus();
         }
-      });
-    
-      // テキストエリアからTABボタンでカテゴリボタンにフォーカスが移るようにする関数
-      document.getElementById("latex-input").addEventListener("keydown", function(event) {
-        if (event.key === "Tab") {
-          event.preventDefault();
-          const firstCategoryBtn = document.querySelector("#category-buttons button");
-          if (firstCategoryBtn) {
-            firstCategoryBtn.focus();
-          }
-        }
-      });
+        e.preventDefault(); // デフォルトのボタン動作を防止（必要に応じて）
+      }
+    }
+  });
 
-      // カテゴリボタンにフォーカスがあるときにENTERボタンを押したらテキストエリアにフォーカスが移る関数
-      const categoryButtonsContainer = document.getElementById("category-buttons");
 
-      // すべてのカテゴリボタンにイベントリスナーを追加
-      categoryButtonsContainer.addEventListener("keydown", function(e) {
-        if (e.key === "Enter") {
-          const activeElem = document.activeElement;
-          if (activeElem && activeElem.tagName === "BUTTON") {
-            activeElem.click(); // クリックイベントを発火させる
-            const textarea = document.getElementById("latex-input");
-            if (textarea) {
-              textarea.focus();
-            }
-            e.preventDefault(); // デフォルトのボタン動作を防止（必要に応じて）
-          }
-        }
-      });
 
-      // 初期表示
-      createCategoryButtons();
-      switchCategory("① 四則・等不等号");
-    </script>
-  </body>
+  // 初期表示
+  createCategoryButtons();
+  switchCategory("① 四則・等不等号");
+</script>
+
+</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
