@@ -6,12 +6,14 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script>
   window.MathJax = {
-    tex: { packages: ['base', 'ams'] ,    },
+    tex: { 
+      packages: {'[+]': ['base', 'ams', 'color']}  // ← color を追加
+    },
     svg: { fontCache: 'none' },  // ← SVG出力に必要な設定
     options: {
       renderActions: { assistiveMml: [] }  // ← 重複回避のため
     },
-    loader: { load: ['[tex]/ams'] },
+    loader: { load: ['[tex]/ams', '[tex]/color'] }, // ← color を追加
     startup: {
       typeset: false  // 自動レンダリングを抑制（自前で renderLaTeX() を呼ぶので）
     }
@@ -281,4 +283,5 @@
 
 </body>
 </html>
+
 
