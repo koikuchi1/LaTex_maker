@@ -168,7 +168,7 @@ const categories = {
     "⋱(8)": " \\ddots ",
     "∵(9)[何故なら]": " \\because ",    
     "∇[ナブラ]": " \\nabla ",
-    "表水平ライン": "\n\\hline\n",
+    "表水平ライン": "\\hline",
     "表用縦ライン入りarray{添字はrclなど}": "\\begin{array}{c|ccccccc} \nA&b&c \\\\ \n\\hline \nD&e&f \\\\ \n\\end{array} ",
   },
 };
@@ -190,6 +190,7 @@ const category_colors = {
   "⑭ 特殊記号": "#ffeecc",
 
 };
+
 
 
 
