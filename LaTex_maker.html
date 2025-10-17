@@ -104,6 +104,12 @@
 
 <button onclick="copyFormulaAsImage()">数式を画像としてコピー</button>
 
+<div class="resize-buttons">
+  <button onclick="changePreviewHeight(50)">▲ プレビューを高く</button>
+  <button onclick="changePreviewHeight(-50)">▼ プレビューを低く</button>
+  <button onclick="resetPreviewHeight()">⟳ リセット</button>
+</div>
+
 <script>
     function insertLatex(cmd) {
     const textarea = document.getElementById("latex-input");
@@ -130,6 +136,7 @@
 //    MathJax.typesetPromise();
 //  }
 
+  //テキスト入力エリアの高さ調整
   function changeTextareaHeight(delta) {
     const textarea = document.getElementById("latex-input");
     const current = parseInt(window.getComputedStyle(textarea).height, 10);
@@ -141,6 +148,20 @@
     const textarea = document.getElementById("latex-input");
     textarea.style.height = "170px";
   }
+
+  //プレビューエリアの高さ調整
+  function changePreviewHeight(delta) {
+    const preview = document.getElementById("preview");
+    const current = parseInt(window.getComputedStyle(preview).maxHeight || "400", 10);
+    const newHeight = Math.max(100, current + delta); // 最小100px
+    preview.style.maxHeight = newHeight + "px";
+  }
+
+  function resetPreviewHeight() {
+    const preview = document.getElementById("preview");
+    preview.style.maxHeight = "400px"; // デフォルト値に戻す
+  }
+
 
   function switchCategory(cat) {
     const btnGroup = document.getElementById("buttons");
