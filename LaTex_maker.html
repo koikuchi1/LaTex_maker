@@ -245,6 +245,17 @@
           }
         }
       }
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        changeTextareaHeight(50);   // 高くする
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        changeTextareaHeight(-50);  // 低くする
+      } else if (e.key.toLowerCase() === "r") {
+        // Ctrl+Rで高さリセット（任意）
+        e.preventDefault();
+        resetTextareaHeight();
+      }
     }
   });
   
@@ -286,6 +297,7 @@
 
 </body>
 </html>
+
 
 
 
