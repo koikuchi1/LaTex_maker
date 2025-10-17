@@ -40,7 +40,7 @@
       min-height: 100px;
       max-height: 400px;   /* ← 高さ上限 */
       overflow-y: auto;    /* ← 縦スクロールバーを表示 */
-      overflow-x: hidden;  /* ← 横スクロールは非表示（任意） */      
+      overflow-x: hidden;  /* ← 横スクロールは非表示（任意） */
       border: 1px dashed #ccc;
       padding: 10px;
       background-color: white; /* ← 背景白に */
@@ -94,6 +94,12 @@
 
 <textarea id="latex-input" oninput="renderLaTeX()" placeholder="ここにLaTeXを入力..."></textarea>
 
+<div class="resize-buttons">
+  <button onclick="changeTextareaHeight(50)">▲ 高くする</button>
+  <button onclick="changeTextareaHeight(-50)">▼ 低くする</button>
+  <button onclick="resetTextareaHeight()">⟳ リセット</button>
+</div>
+
 <div id="preview"></div>
 
 <button onclick="copyFormulaAsImage()">数式を画像としてコピー</button>
@@ -123,6 +129,18 @@
 //    document.getElementById("preview").innerHTML = `\\[${latex}\\]`;
 //    MathJax.typesetPromise();
 //  }
+
+  function changeTextareaHeight(delta) {
+    const textarea = document.getElementById("latex-input");
+    const current = parseInt(window.getComputedStyle(textarea).height, 10);
+    const newHeight = Math.max(50, current + delta);
+    textarea.style.height = newHeight + "px";
+  }
+
+  function resetTextareaHeight() {
+    const textarea = document.getElementById("latex-input");
+    textarea.style.height = "170px";
+  }
 
   function switchCategory(cat) {
     const btnGroup = document.getElementById("buttons");
@@ -197,6 +215,7 @@
     };
     img.src = url;
   }
+
 
 // async function copyFormulaAsImage() {
 //    const formulaDiv = document.getElementById("preview");
@@ -297,11 +316,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
